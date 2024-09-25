@@ -1,0 +1,110 @@
+<?php
+
+namespace Alertas\Controller;
+
+use Alertas\Helper\EntityManagerCreator;
+use Dotenv\Dotenv;
+
+class Controller
+{
+    protected $eM;
+    protected $repository;
+    protected $dotenv;
+
+    public function __construct($entitdade)
+    {
+        $entityManager = new EntityManagerCreator();
+        $this->eM = $entityManager->createEntityManager();
+        $this->repository = $this->eM->getRepository($entitdade);
+        /*$this->dotenv = Dotenv::createImmutable(__DIR__);
+        $this->dotenv->load();*/
+    }
+
+    public function list()
+    {
+        $entidades = $this->repository->findAll();
+        
+        $formatadas = [];
+        foreach($entidades as $entidade){
+            $formatadas[] = $entidade->toJson();
+        }
+
+        $this->send($formatadas);
+    }
+    
+    public function show(int $id)
+    {
+        $this->send($this->repository->find($id)->toJson());
+    }
+
+    public function create(array $parameters): void
+    {
+        
+    }
+
+    public function update(array $parameters): void
+    {
+
+    }
+
+    public function remove(): void
+    {
+
+    }
+
+    /**
+     * Recieves data comming from a form
+     * and an array with rules of every field to validate them.
+     * 
+     * @param array $inputData - ex: ['name' => 'fulano', 'email' => 'fulano@mail.com', 'password' => '123', 'active' => true]
+     * @param array $regras  - ex: ['name' => 'string', 'email' => 'email', 'password' => string, 'active' => 'boolean']
+     * @return array
+     */
+    public function validate(array $inputData, array $regras) : array
+    {
+        // Define validation rules for each input field.
+        $validationRules = array(
+            'email' => FILTER_VALIDATE_EMAIL,
+            'age' => array(
+                'filter' => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 1, 'max_range' => 120) // Adjust the range as needed.
+            ),
+            'int' => FILTER_VALIDATE_INT,
+            'float' => FILTER_VALIDATE_FLOAT,
+            'double' => FILTER_VALIDATE_FLOAT,
+            'boolean' => FILTER_VALIDATE_BOOL
+            // Add more fields and validation rules as needed.
+        );
+
+        // Initialize an array to store sanitized data.
+        $sanitizedData = array();
+
+        foreach ($inputData as $indice => $dado) {
+            if (isset($regras[$indice]) && isset($validationRules[$regras[$indice]])) {
+                $filtro = $validationRules[$regras[$indice]];
+                $sanitizedData[$indice] = filter_var($dado, $filtro);
+
+                // Se o último for inválido
+                if ($sanitizedData[$indice] === false) {
+                    // Retorne mensagem de erro
+                    return ['erro' => "campo $indice inválido"];
+                }
+            }
+            // Regra para string
+            if ($regras[$indice] === 'string') {
+                $sanitizedData[$indice] = htmlspecialchars($dado, ENT_QUOTES, 'UTF-8');
+            }
+        }
+
+        return $sanitizedData;
+    }
+
+    /**
+     * Send a response json
+     * @param array $response
+     */
+    public function send(array $response) : void 
+    {
+        echo json_encode($response);
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "name": "democrito88/alertabot",
+    "version": "0.0.0",
+    "description": "Projeto para emitir alertas automáticos via telegram",
+    "keywords": ["php", "telegram", "bot", "alerts"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Demócrito d'Anunciação",
+            "email": "democrito@olinda.pe.gov.br",
+            "homepage": "https://github.com/democrito88",
+            "role": "admin"
+        }
+    ],
+    "require": {
+        "telegram-bot/api": "^2.3",
+        "doctrine/orm": "^2.11.0",
+        "doctrine/dbal": "^3.2",
+        "doctrine/annotations": "1.13.2",
+        "symfony/yaml": "^5.4",
+        "symfony/cache": "^5.4",
+        "doctrine/migrations": "^3.5",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "scripts": {
+        "migrate": "php vendor/bin/doctrine-migrations migrations:migrate --configuration \"database/migrations/migrations.php\" --db-configuration \"database/migrations/migrations-db.php\"",
+        "seed": "php database/seeder/seeder.php",
+        "enviar": "php bin/enviarMensagem.php"
+    },
+    "autoload": {
+        "psr-4": {
+            "Alertas\\":"src/",
+            "Alertas\\Seeders\\": "database/seeder/"
+        }
+    }
+}
