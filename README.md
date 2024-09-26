@@ -3,16 +3,19 @@
 Projeto para emitir alertas automáticos via telegram
 
 ### Uso
+Instale as bibliotecas e dependências:
+```composer install```
+
 Configure o Token do robô no .env
 
 Execute a migração:
-```php migrate```
+```composer migrate```
 
 ...O seed:
-```php seed```
+```composer seed```
 
 ...e envie a mensagem
-```php enviar "sua mensagem"```
+```composer enviar "sua mensagem"```
 
 ### Autor
 [Demócrito d'Anunciação](https://github.com/democrito88)

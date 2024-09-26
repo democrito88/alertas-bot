@@ -4,6 +4,7 @@ namespace Alertas\Controller;
 
 use Alertas\Entity\Alerta;
 use TelegramBot\Api\BotApi;
+use TelegramBot\Api\InvalidArgumentException;
 
 class AlertaController extends Controller{
     protected string $telegramBotToken;
@@ -30,6 +31,9 @@ class AlertaController extends Controller{
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function enviarMensagemParaTodos(string $mensagem) : void
     {
         $destinatarios = $this->dC->repository->findAll();

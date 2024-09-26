@@ -19,11 +19,14 @@
         "doctrine/annotations": "1.13.2",
         "symfony/yaml": "^5.4",
         "symfony/cache": "^5.4",
-        "doctrine/migrations": "^3.5",
         "vlucas/phpdotenv": "^5.6"
+    },
+    "require-dev": {
+        "doctrine/migrations": "^3.5"
     },
     "scripts": {
         "migrate": "php vendor/bin/doctrine-migrations migrations:migrate --configuration \"database/migrations/migrations.php\" --db-configuration \"database/migrations/migrations-db.php\"",
+        "generate-migration": "php vendor/bin/doctrine-migrations migrations:generate --configuration \"database/migrations/migrations.php\" --db-configuration \"database/migrations/migrations-db.php\"",
         "seed": "php database/seeder/seeder.php",
         "enviar": "php bin/enviarMensagem.php"
     },
