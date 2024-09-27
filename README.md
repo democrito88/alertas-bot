@@ -14,8 +14,8 @@ Execute a migração:
 ...O seed:
 ```composer seed```
 
-...e envie a mensagem
-```composer enviar "sua mensagem"```
+...e envie o relatório do GLPI
+```composer enviar```
 
 ### Autor
 [Demócrito d'Anunciação](https://github.com/democrito88)
