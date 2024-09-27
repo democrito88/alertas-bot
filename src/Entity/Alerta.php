@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\{
 };
 
 #[Entity()]
-#[Table("alertas")]
+#[Table(name:"alertas")]
 class Alerta{
     #[Id, GeneratedValue, Column]
     public int $id;
