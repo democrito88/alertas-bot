@@ -26,7 +26,7 @@ class Alerta{
     private DateTime $envio;
 
     #[OneToMany(
-        mappedBy: "student",
+        mappedBy: "destinatarios",
         targetEntity: Destinatario::class,
         cascade: ["persist", "remove"]
     )]
