@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\{
 };
 
 #[Entity()]
-#[Table("alertas")]
+#[Table(name:"alertas")]
 class Alerta{
     #[Id, GeneratedValue, Column]
     public int $id;
@@ -26,7 +26,7 @@ class Alerta{
     private DateTime $envio;
 
     #[OneToMany(
-        mappedBy: "student",
+        mappedBy: "destinatarios",
         targetEntity: Destinatario::class,
         cascade: ["persist", "remove"]
     )]
